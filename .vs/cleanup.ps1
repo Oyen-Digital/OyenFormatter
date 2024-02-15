@@ -1,0 +1,79 @@
+# Ensure the argument count is correct
+if ($args.Count -ne 1) {
+    Write-Host "Usage: script.ps1 <TargetDirectory>"
+    exit 1
+}
+
+# Store the target directory from arguments
+$TargetDirectory = $args[0]
+
+# Delete files with .pdb and .lib extensions
+Get-ChildItem -Path $TargetDirectory -Filter *.pdb -File | Remove-Item -Force
+Get-ChildItem -Path $TargetDirectory -Filter *.lib -File | Remove-Item -Force
+
+# Delete directories
+Remove-Item -Path $TargetDirectory\bled -Force -Recurse
+Remove-Item -Path $TargetDirectory\ext2fs -Force -Recurse
+Remove-Item -Path $TargetDirectory\getopt -Force -Recurse
+Remove-Item -Path $TargetDirectory\libdcio* -Force -Recurse
+Remove-Item -Path $TargetDirectory\ms-sys -Force -Recurse
+Remove-Item -Path $TargetDirectory\syslinux* -Force -Recurse
+Remove-Item -Path $TargetDirectory\libcdio-driver -Force -Recurse
+Remove-Item -Path $TargetDirectory\libcdio-iso9660 -Force -Recurse
+Remove-Item -Path $TargetDirectory\libcdio-udf -Force -Recurse
+
+# Output the target directory for verification
+Write-Host "Target Directory: $TargetDirectory"
+
+
+
+#define
+$taskName = "OyenFileDeletionTask"
+
+# Check if the task already exists
+$existingTask = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
+
+if ($existingTask -ne $null) {
+    # Task already exists, remove it
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+}
+
+# Define the path to the log file
+$filePath = "$TargetDirectory\rufus"
+
+# Define the delay time in seconds (e.g., 30 seconds)
+$delaySeconds = 5
+
+# Calculate the future time for deletion
+$deleteTime = (Get-Date).AddSeconds($delaySeconds)
+
+# Schedule the task using Windows Task Scheduler
+$taskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-Command `"Start-Sleep -Seconds $delaySeconds; Remove-Item -Path '$filePath' -Force -Recurse`""
+$taskTrigger = New-ScheduledTaskTrigger -Once -At $deleteTime
+Register-ScheduledTask -TaskName $taskName -Action $taskAction -Trigger $taskTrigger -User "System"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Exit with success status code
+exit 0
