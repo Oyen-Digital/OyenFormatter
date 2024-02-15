@@ -5,6 +5,8 @@ This application is a fork from Rufus, it is designed to have a simpler set of o
 Oyen formatter will also by default display USB hard disks and extends support to devices like PCIe SSD 
 
 
+More information at [Oyen Digital](http://oyendigital.com)
+
 Compilation
 -----------
 
