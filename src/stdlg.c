@@ -1465,7 +1465,8 @@ BOOL SetUpdateCheck(void)
 #endif
 			more_info.id = IDD_UPDATE_POLICY;
 			more_info.callback = UpdateCallback;
-			enable_updates = Notification(MSG_QUESTION, NULL, &more_info, lmprintf(MSG_004), lmprintf(MSG_005));
+//			enable_updates = Notification(MSG_QUESTION, NULL, &more_info, lmprintf(MSG_004), lmprintf(MSG_005));
+			enable_updates = FALSE;
 #if !defined(_DEBUG)
 		}
 #endif

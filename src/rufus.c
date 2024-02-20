@@ -2181,7 +2181,7 @@ static void InitDialog(HWND hDlg)
 	if (!advanced_mode_format)
 		ToggleAdvancedFormatOptions(FALSE);
 	ToggleImageOptions();
-
+	
 	// Process commandline parameters
 	if (img_provided) {
 		// Simulate a button click for image selection

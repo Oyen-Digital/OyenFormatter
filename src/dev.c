@@ -1035,9 +1035,8 @@ BOOL GetDevices(DWORD devnum)
 	// Now populate the drive combo box
 	// NB: The combo box must have the UNSORTED attribute for indexes to remain the ones we assign
 	for (u = 0; u < num_drives; u++) {
-		if (strstr(buffer,"Oyen") != NULL) {
 
-			//			IGNORE_RETVAL(ComboBox_SetItemData(hDeviceList, ComboBox_AddStringU(hDeviceList, rufus_drive[u].display_name), rufus_drive[u].index));
+		if (strstr(rufus_drive[u].name, "Oyen") != NULL) {
 			IGNORE_RETVAL(ComboBox_SetItemData(hDeviceList, ComboBox_AddStringU(hDeviceList, rufus_drive[u].name), rufus_drive[u].index));
 			maxwidth = max(maxwidth, GetEntryWidth(hDeviceList, rufus_drive[u].display_name));
 		}
